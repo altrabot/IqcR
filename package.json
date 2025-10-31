@@ -2,10 +2,10 @@
   "name": "iqc-generator",
   "version": "1.0.0",
   "description": "WhatsApp iPhone Screenshot Generator",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
     "token-generator": "node runtime-log-generator.js"
   },
   "dependencies": {
