@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 8080; // Zeabur menggunakan port 8080
+const PORT = process.env.PORT || 8080;
 
 // Middleware untuk logging
 app.use((req, res, next) => {
@@ -11,8 +11,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve static files
-app.use(express.static('.', {
+// Serve static files dari root directory
+app.use(express.static(path.join(__dirname, '..'), {
     index: false,
     extensions: ['html', 'htm']
 }));
@@ -20,12 +20,22 @@ app.use(express.static('.', {
 // API endpoint untuk mendapatkan token
 app.get('/api/tokens', (req, res) => {
     try {
-        const tokensPath = path.join(__dirname, 'tokens', 'tokens.json');
+        const tokensPath = path.join(__dirname, '..', 'tokens', 'tokens.json');
         if (fs.existsSync(tokensPath)) {
             const tokensData = JSON.parse(fs.readFileSync(tokensPath, 'utf8'));
             res.json(tokensData);
         } else {
-            res.json({ tokens: [] });
+            // Return default tokens jika file tidak ada
+            const defaultTokens = {
+                tokens: [
+                    { token: "TCR-A1B2C-05", tcrAmount: 5 },
+                    { token: "TCR-D3E4F-05", tcrAmount: 5 },
+                    { token: "TCR-I1J2K-30", tcrAmount: 30 },
+                    { token: "TCR-M1N2O-80", tcrAmount: 80 },
+                    { token: "TCR-Q1R2S-150", tcrAmount: 150 }
+                ]
+            };
+            res.json(defaultTokens);
         }
     } catch (error) {
         console.error('Error loading tokens:', error);
@@ -37,7 +47,7 @@ app.get('/api/tokens', (req, res) => {
 app.post('/api/tokens/:token/use', express.json(), (req, res) => {
     try {
         const token = req.params.token;
-        const usedPath = path.join(__dirname, 'tokens', 'used.json');
+        const usedPath = path.join(__dirname, '..', 'tokens', 'used.json');
         
         let usedData = { used: [] };
         if (fs.existsSync(usedPath)) {
@@ -59,19 +69,19 @@ app.post('/api/tokens/:token/use', express.json(), (req, res) => {
 
 // Route untuk setiap halaman HTML
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 app.get('/dashboard.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
+    res.sendFile(path.join(__dirname, '..', 'dashboard.html'));
 });
 
 app.get('/generate.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'generate.html'));
+    res.sendFile(path.join(__dirname, '..', 'generate.html'));
 });
 
 app.get('/donation.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'donation.html'));
+    res.sendFile(path.join(__dirname, '..', 'donation.html'));
 });
 
 // Health check endpoint untuk Zeabur
@@ -79,13 +89,14 @@ app.get('/health', (req, res) => {
     res.status(200).json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        service: 'IQC Generator'
+        service: 'IQC Generator',
+        version: '1.0.0'
     });
 });
 
 // Handle 404
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'index.html'));
+    res.status(404).sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Error handling
