@@ -2,15 +2,24 @@
   "name": "iqc-generator",
   "version": "1.0.0",
   "description": "WhatsApp iPhone Screenshot Generator",
-  "main": "runtime-log-generator.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node runtime-log-generator.js",
+    "start": "node server.js",
+    "dev": "node server.js",
     "token-generator": "node runtime-log-generator.js"
   },
-  "keywords": ["whatsapp", "screenshot", "generator", "iphone"],
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": [
+    "whatsapp",
+    "screenshot",
+    "generator",
+    "iphone"
+  ],
   "author": "IQC Generator",
   "license": "MIT",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   }
 }
