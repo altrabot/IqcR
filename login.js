@@ -17,12 +17,40 @@ document.addEventListener('DOMContentLoaded', function() {
     nameInput.addEventListener('input', validateForm);
     tokenInput.addEventListener('input', validateForm);
     
+    // Auto-format token to uppercase
+    tokenInput.addEventListener('blur', function() {
+        this.value = this.value.toUpperCase();
+    });
+    
     // Handle form submission
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const name = nameInput.value.trim();
         const token = tokenInput.value.trim().toUpperCase();
+        
+        // Basic validation
+        if (!name) {
+            showError('Nama harus diisi');
+            return;
+        }
+        
+        if (!token) {
+            showError('Token harus diisi');
+            return;
+        }
+        
+        // Validate token format
+        if (!token.match(/^TCR-[A-Z0-9]{5}-(05|30|80|150)$/)) {
+            showError('Format token tidak valid. Contoh: TCR-A1B2C-05');
+            return;
+        }
+        
+        // Check if token already used (client-side check)
+        if (TokenManager.isTokenUsed(token)) {
+            showError('Token ini sudah digunakan');
+            return;
+        }
         
         // Show loading state
         loginBtn.disabled = true;
@@ -38,25 +66,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('userTCR', isValid.tcrAmount);
                 sessionStorage.setItem('usedToken', token);
                 
-                // Mark token as used
-                await TokenManager.markTokenAsUsed(token);
+                // Mark token as used (client-side)
+                TokenManager.addToUsedTokens(token);
                 
-                // Redirect to dashboard
-                window.location.href = 'dashboard.html';
+                // Show success message
+                IQCGenerator.showMessage('Login berhasil! Mengarahkan ke dashboard...');
+                
+                // Redirect to dashboard after short delay
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
             } else {
-                errorMessage.textContent = 'Kode token salah atau sudah digunakan.';
-                errorMessage.classList.add('show');
+                showError('Kode token salah atau sudah digunakan.');
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Lanjutkan';
             }
         } catch (error) {
             console.error('Login error:', error);
-            errorMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
-            errorMessage.classList.add('show');
+            showError('Terjadi kesalahan. Silakan coba lagi.');
             loginBtn.disabled = false;
             loginBtn.textContent = 'Lanjutkan';
         }
     });
+    
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.add('show');
+        
+        // Auto hide error after 5 seconds
+        setTimeout(() => {
+            errorMessage.classList.remove('show');
+        }, 5000);
+    }
+    
+    // Clear error when user starts typing
+    nameInput.addEventListener('input', clearError);
+    tokenInput.addEventListener('input', clearError);
+    
+    function clearError() {
+        errorMessage.classList.remove('show');
+    }
     
     // Initial validation
     validateForm();
