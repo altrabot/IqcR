@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IQC Generator</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <div class="user-info">
+                <h1>Hi, <span id="userName"></span></h1>
+                <p>Selamat datang di IQC Generator</p>
+                <div class="token-info">
+                    <span>Sisa Token Generate: <strong id="userTCR">0</strong> TCR</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <a href="donation.html" class="btn-secondary">Donasi</a>
+                <a href="https://wa.me/6283131871328" target="_blank" class="btn-primary">Order Token</a>
+            </div>
+        </header>
+        
+        <main class="dashboard-main">
+            <div class="generator-card">
+                <h2>Buat Screenshot WhatsApp</h2>
+                
+                <form id="generatorForm">
+                    <div class="input-group">
+                        <label for="chatText">Teks Percakapan</label>
+                        <textarea id="chatText" placeholder="Masukkan teks percakapan WhatsApp..." rows="6" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="batteryLevel">Level Baterai (0-100)</label>
+                            <input type="number" id="batteryLevel" min="0" max="100" value="85" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="networkName">Nama Jaringan</label>
+                            <input type="text" id="networkName" value="Telkomsel" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phoneTime">Waktu HP</label>
+                        <input type="time" id="phoneTime" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="generateBtn">Generate Screenshot</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script src="src/main.js"></script>
+    <script src="src/dashboard.js"></script>
+</body>
+  </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Screenshot - IQC Generator</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="result-header">
+            <h1>Hasil Screenshot Anda</h1>
+            <a href="dashboard.html" class="btn-secondary">Kembali ke Dashboard</a>
+        </header>
+        
+        <main class="result-main">
+            <div class="screenshot-container">
+                <div id="screenshotResult" class="iphone-screenshot">
+                    <!-- Hasil screenshot akan ditampilkan di sini -->
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="downloadBtn" class="btn-primary">Unduh Gambar</button>
+                <button id="shareBtn" class="btn-secondary">Bagikan Gambar</button>
+            </div>
+            
+            <div class="token-info">
+                <p>Sisa TCR: <strong id="remainingTCR">0</strong></p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="src/main.js"></script>
+    <script src="src/generator.js"></script>
+</body>
+</html>

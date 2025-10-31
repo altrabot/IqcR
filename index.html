@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQC Generator - Login</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="logo-section">
+                <h1>IQC Generator</h1>
+                <p>Buat screenshot percakapan WhatsApp iPhone dengan mudah</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="name">Nama</label>
+                    <input type="text" id="name" placeholder="Masukkan nama Anda" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="token">Token (TCR)</label>
+                    <input type="text" id="token" placeholder="Masukkan token TCR" required>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="loginBtn">Lanjutkan</button>
+            </form>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div class="footer-links">
+                <p>Belum punya token? <a href="https://wa.me/6283131871328" target="_blank">Order Token</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="src/tokenManager.js"></script>
+    <script src="src/login.js"></script>
+</body>
+</html>
