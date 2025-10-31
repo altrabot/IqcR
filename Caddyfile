@@ -1,0 +1,5 @@
+iqcr.zeabur.app {
+    root * .
+    file_server
+    try_files {path} {path}/ /index.html
+}
